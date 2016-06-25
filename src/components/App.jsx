@@ -46,26 +46,20 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    var that = this;
-    this.props.searchYouTube({
-      key: window.YOUTUBE_API_KEY,
-      q: 'react',
-      maxResults: 5
-    }, 
-      function(value) {
-        that.setState({
-          currentVideo: value[0],
-          videoList: value
-        });
-      });
+    this.callYouTube();
   }
+
+
 
   callYouTube(title) {
     var that = this;
+    title = title || 'Wu-tang';
     this.props.searchYouTube({
       key: window.YOUTUBE_API_KEY,
       q: title,
-      maxResults: 5
+      maxResults: 5,
+      type: 'video',
+      videoEmbeddable: true
     }, 
       function(value) {
         that.setState({
