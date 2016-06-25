@@ -1,6 +1,7 @@
-var VideoDetails = (props) => (
+var VideoDetails = ({videoDetails}) => (
   <div className='video-details'>
-    <p></p>
+    <p>ViewCount {videoDetails.statistics === undefined ? '' : videoDetails.statistics.viewCount}</p>
   </div>
 );
 
+// {VideoDetails.statistics.commentCount}

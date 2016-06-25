@@ -48,7 +48,6 @@ class App extends React.Component {
   
   componentDidMount() {
     this.callYouTube();
-
   }
 
   callYouTube(title) {
@@ -61,9 +60,7 @@ class App extends React.Component {
       type: 'video',
       videoEmbeddable: true
     };
-
     this.props.searchYouTube(options, this.updateVideoList.bind(this));
-    // this.getVideoDetails();
   }
 
   updateVideoList(value) {
@@ -71,29 +68,31 @@ class App extends React.Component {
       currentVideo: value[0],
       videoList: value
     });
+    this.getVideoDetails(value[0]);
+  }
+
+  getVideoDetails(video) {
+    var id = video.id.videoId;
+    var options = {
+      key: YOUTUBE_API_KEY,
+      part: 'statistics',
+      id: id
+    };
+    this.props.searchYouTube(options, this.updateVideoDetails.bind(this), 'videos'); 
   }
 
   updateVideoDetails(value) {
     this.setState({
       videoDetails: value[0]
     });
-  }
-
-  getVideoDetails() {
-    var id = this.state.currentVideo.id.videoId;
-    var options = {
-      key: YOUTUBE_API_KEY,
-      part: 'contentDetails',
-      id: id
-    };
-    this.props.searchYouTube(options, this.updateVideoDetails.bind(this), 'videos'); 
+    console.log(value);
   }
 
   onVideoClick(video) {
     this.setState({
       currentVideo: video
     });
-    this.getVideoDetails();
+    this.getVideoDetails(video);
   }
 
   render () {
@@ -101,7 +100,7 @@ class App extends React.Component {
       <div>
         <Nav search={this.callYouTube.bind(this)}/>
         <div className="col-md-7">
-          <VideoPlayer video={this.state.currentVideo} videoDetails={this.state.videoDetails}/>
+          <VideoPlayer video={this.state.currentVideo} videoDetails={this.state.videoDetails} />
         </div>
         <div className="col-md-5">
           <VideoList videos={this.state.videoList} onVideoClick={this.onVideoClick.bind(this)} />
