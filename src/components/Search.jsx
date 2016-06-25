@@ -8,7 +8,7 @@ class Search extends React.Component {
     this.debouncedSearch = _.debounce(function(event) {
       this.setState({inputValue: event.target.value});
       this.props.search(this.state.inputValue);
-    }, 1000, {leading: true});
+    }, 500, {leading: true});
   }
 
   handleChange(event) {
