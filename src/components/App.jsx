@@ -18,14 +18,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videoNumber: 0
+      currentVideo: exampleVideoData[0],
+      videoList: exampleVideoData
     };
   }
 
-  onVideoClick(videoNum) {
-    console.log(videoNum);
+  onVideoClick(video) {
     this.setState({
-      videoNumber: videoNum
+      currentVideo: video
     });
   }
 
@@ -34,10 +34,10 @@ class App extends React.Component {
       <div>
         <Nav />
         <div className="col-md-7">
-          <VideoPlayer video={exampleVideoData[this.state.videoNumber]}/>
+          <VideoPlayer video={this.state.currentVideo}/>
         </div>
         <div className="col-md-5">
-          <VideoList videos={exampleVideoData} appContext={this} />
+          <VideoList videos={this.state.videoList} onVideoClick={this.onVideoClick.bind(this)} />
         </div>
       </div>
     );
